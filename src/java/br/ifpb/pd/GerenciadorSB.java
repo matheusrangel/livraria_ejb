@@ -6,6 +6,7 @@
 package br.ifpb.pd;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -31,6 +32,9 @@ public class GerenciadorSB implements GerenciadorRemote {
     
     @EJB
     private ContadorLocal contador;
+    
+    @EJB
+    private LogLocal log;
            
     @Override
     public boolean cadastrar(Livro livro) {
@@ -38,6 +42,7 @@ public class GerenciadorSB implements GerenciadorRemote {
             return false;
         }
         em.persist(livro);
+        log.novaAcao(new Acao("CADASTRO do livro "+livro.toString(), new Date()));
         return true;
     }
 
@@ -49,6 +54,7 @@ public class GerenciadorSB implements GerenciadorRemote {
         } else {
             l = livro;
             em.merge(l);
+            log.novaAcao(new Acao("ATUALIZAÇÃO do livro "+livro.toString(), new Date()));
             return true;
         }
     }
@@ -81,6 +87,7 @@ public class GerenciadorSB implements GerenciadorRemote {
         Livro livro = em.find(Livro.class, codigo);
         if (livro != null) {
             em.remove(livro);
+            log.novaAcao(new Acao("EXCLUSÃO do livro "+livro.toString(), new Date()));
             return livro;
         } else {
             return null;
