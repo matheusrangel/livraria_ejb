@@ -19,4 +19,5 @@ public interface GerenciadorRemote {
     public boolean atualizar(Livro livro);
     public List<Livro> consultar(HashMap<String, Object> params);
     public Livro excluir(Long codigo);
+    public Integer numeroDeBuscas();
 }

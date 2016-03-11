@@ -8,6 +8,7 @@ package br.ifpb.pd;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +29,9 @@ public class GerenciadorSB implements GerenciadorRemote {
     @PersistenceContext(unitName = "LivrariaPU")
     private EntityManager em;
     
+    @EJB
+    private ContadorLocal contador;
+           
     @Override
     public boolean cadastrar(Livro livro) {
         if (em.contains(livro)) {
@@ -68,6 +72,7 @@ public class GerenciadorSB implements GerenciadorRemote {
         }    
         cq.where(predicates.toArray(new Predicate[]{}));
         TypedQuery<Livro> query = em.createQuery(cq);
+        contador.incrementar(); //Incrementa contador de buscas
         return query.getResultList();
     }
 
@@ -80,6 +85,11 @@ public class GerenciadorSB implements GerenciadorRemote {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Integer numeroDeBuscas() {
+        return contador.getCont();
     }
 
     
