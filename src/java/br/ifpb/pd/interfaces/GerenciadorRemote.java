@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifpb.pd;
+package br.ifpb.pd.interfaces;
 
+import br.ifpb.pd.model.Livro;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Remote;
@@ -17,7 +18,7 @@ import javax.ejb.Remote;
 public interface GerenciadorRemote {
     public boolean cadastrar(Livro livro);
     public boolean atualizar(Livro livro);
-    public List<Livro> consultar(HashMap<String, Object> params);
+    public List<Livro> consultar(String titulo, String autor, String isbn);
     public Livro excluir(Long codigo);
     public Integer numeroDeBuscas();
 }
