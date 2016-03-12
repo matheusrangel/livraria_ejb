@@ -15,7 +15,7 @@ import javax.jws.WebService;
  *
  * @author matheus
  */
-@WebService
+@WebService(targetNamespace = "http://sb.pd.ifpb.br/")
 public interface GerenciadorWS {
     @WebMethod(operationName = "consultar")
     public List<Livro> consultar(

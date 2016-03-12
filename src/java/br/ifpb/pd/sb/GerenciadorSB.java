@@ -13,11 +13,9 @@ import br.ifpb.pd.model.Acao;
 import br.ifpb.pd.model.Livro;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,7 +32,7 @@ import javax.persistence.criteria.Root;
  */
 
 @Stateless(mappedName = "gerenciador")
-@WebService(serviceName = "livraria", endpointInterface = "br.ifpb.pd.interfaces.GerenciadorWS")
+@WebService(serviceName = "livraria", endpointInterface = "br.ifpb.pd.interfaces.GerenciadorWS", targetNamespace = "http://sb.pd.ifpb.br/")
 public class GerenciadorSB implements GerenciadorRemote, GerenciadorWS {
     
     @PersistenceContext(unitName = "LivrariaPU")
@@ -69,6 +67,13 @@ public class GerenciadorSB implements GerenciadorRemote, GerenciadorWS {
         }
     }
     
+    /**
+     *
+     * @param titulo
+     * @param autor
+     * @param isbn
+     * @return
+     */
     @Override
     public List<Livro> consultar(String titulo, String autor, String isbn) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -108,6 +113,5 @@ public class GerenciadorSB implements GerenciadorRemote, GerenciadorWS {
     public Integer numeroDeBuscas() {
         return contador.getCont();
     }
-
     
 }
