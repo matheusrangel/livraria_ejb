@@ -9,6 +9,7 @@ import br.ifpb.pd.model.Livro;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 
 /**
@@ -18,6 +19,7 @@ import javax.jws.WebService;
 @WebService(targetNamespace = "http://sb.pd.ifpb.br/")
 public interface GerenciadorWS {
     @WebMethod(operationName = "consultar")
+    @WebResult(name = "livro")
     public List<Livro> consultar(
             @WebParam(name = "titulo") String titulo,
             @WebParam(name = "autor") String autor, 
